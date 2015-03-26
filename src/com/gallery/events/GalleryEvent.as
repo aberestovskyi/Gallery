@@ -1,5 +1,4 @@
-package com.gallery.events
-{
+package com.gallery.events {
 	import flash.events.Event;
 
 	/**
@@ -8,7 +7,6 @@ package com.gallery.events
 	public class GalleryEvent extends Event
 	{
 		public static const LOADING_COMPLETE:String = "LOADING_COMPLETE";
-		public static const LOAD_IMAGE_COMPLETE:String = "LOAD_IMAGE_COMPLETE";
 		public static const IMAGE_CLICK:String = "IMAGE_CLICK";
 		public static const LOAD_NEW_IMAGE:String = "LOAD_NEW_IMAGE";
 		public static const LOAD_NEW_IMAGE_COMPLETE:String = "LOAD_NEW_IMAGE_COMPLETE";

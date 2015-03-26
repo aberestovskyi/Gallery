@@ -33,23 +33,23 @@ package com.gallery.controller
 		{
 			super.execute();
 			
-			eventDispatcher.addEventListener(GalleryEvent.LOAD_IMAGE_COMPLETE, onLoadImageComplete);
-	
+
 			_totalImages = 3;
+			service.onLoadImageCompleteSignal.add(onLoadImageComplete);
 			service.loadImage(ImagesFactory.getImageURL(0));
 			service.loadImage(ImagesFactory.getImageURL(1));
 			service.loadImage(ImagesFactory.getImageURL(2));
 		}
 		
-		private function onLoadImageComplete(evt:GalleryEvent):void
+		private function onLoadImageComplete(image:Bitmap):void
 		{
-			imagesModel.addImage(evt.data as Bitmap);
+			imagesModel.addImage(image);
 			
 			
 			_countLoadedImages++;
 			if (_countLoadedImages >= _totalImages)
 			{
-				eventDispatcher.removeEventListener(GalleryEvent.LOAD_IMAGE_COMPLETE, onLoadImageComplete);
+				service.onLoadImageCompleteSignal.remove(onLoadImageComplete);
 				
 				eventDispatcher.dispatchEvent(new GalleryEvent(GalleryEvent.LOADING_COMPLETE));
 			}

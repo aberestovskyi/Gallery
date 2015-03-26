@@ -1,5 +1,4 @@
-package com.gallery.controller
-{
+package com.gallery.controller {
 	import com.gallery.events.GalleryEvent;
 	import com.gallery.factory.ImagesFactory;
 	import com.gallery.model.GalleryModel;
@@ -29,8 +28,6 @@ package com.gallery.controller
 		{
 			super.execute();
 			
-			eventDispatcher.addEventListener(GalleryEvent.LOAD_IMAGE_COMPLETE, onLoadImageComplete);
-			
 			var nextImage:String = ImagesFactory.getImageURL(imagesModel.lastLoadedImageIndex);
 			if(!nextImage)
 			{
@@ -38,14 +35,13 @@ package com.gallery.controller
 				nextImage = ImagesFactory.getImageURL(imagesModel.lastLoadedImageIndex);
 			}
 			
+			service.onLoadImageCompleteSignal.addOnce(onLoadImageComplete);
 			service.loadImage(nextImage);
 		}
 		
-		private function onLoadImageComplete(evt:GalleryEvent):void
+		private function onLoadImageComplete(image:Bitmap):void
 		{
-			eventDispatcher.removeEventListener(GalleryEvent.LOAD_IMAGE_COMPLETE, onLoadImageComplete);
-			
-			imagesModel.addImage(evt.data as Bitmap);
+			imagesModel.addImage(image);
 			
 			eventDispatcher.dispatchEvent(new GalleryEvent(GalleryEvent.LOAD_NEW_IMAGE_COMPLETE));
 			

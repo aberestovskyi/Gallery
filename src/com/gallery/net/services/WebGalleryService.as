@@ -1,9 +1,8 @@
-package com.gallery.net.services
-{
-	import com.gallery.events.GalleryEvent;
-
+package com.gallery.net.services {
+	import org.osflash.signals.Signal;
 	import org.robotlegs.mvcs.Actor;
 
+	import flash.display.Bitmap;
 	import flash.display.Loader;
 	import flash.display.LoaderInfo;
 	import flash.events.Event;
@@ -15,6 +14,8 @@ package com.gallery.net.services
 	 */
 	public class WebGalleryService extends Actor implements IGalleryImageService
 	{
+		private var _onLoadImageCompleteSignal:Signal = new Signal(Bitmap);
+		
 		public function WebGalleryService()
 		{
 			super();
@@ -35,12 +36,17 @@ package com.gallery.net.services
 			loaderInfo.loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, onLoadImageComplete);
 			loaderInfo.loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, onIoErrorEvent);
 			
-			dispatch(new GalleryEvent(GalleryEvent.LOAD_IMAGE_COMPLETE, loaderInfo.loader.content));
+			_onLoadImageCompleteSignal.dispatch(loaderInfo.loader.content);
 		}
 		
 		private function onIoErrorEvent(evt:IOErrorEvent):void
 		{
 			trace(evt.text);
+		}
+
+		public function get onLoadImageCompleteSignal() : Signal 
+		{
+			return _onLoadImageCompleteSignal;
 		}
 	}
 }
