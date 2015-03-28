@@ -1,4 +1,5 @@
-package com.gallery.net.services {
+package com.gallery.net.services
+{
 	import org.osflash.signals.Signal;
 	import org.robotlegs.mvcs.Actor;
 
@@ -15,6 +16,7 @@ package com.gallery.net.services {
 	public class WebGalleryService extends Actor implements IGalleryImageService
 	{
 		private var _onLoadImageCompleteSignal:Signal = new Signal(Bitmap);
+		private var _onLoadImageFailSignal:Signal = new Signal(String);
 		
 		public function WebGalleryService()
 		{
@@ -42,6 +44,7 @@ package com.gallery.net.services {
 		private function onIoErrorEvent(evt:IOErrorEvent):void
 		{
 			trace(evt.text);
+			_onLoadImageFailSignal.dispatch(evt.text);
 		}
 
 		public function get onLoadImageCompleteSignal() : Signal 

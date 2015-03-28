@@ -1,11 +1,13 @@
 package 
 {
-	import tests.TestArraysTask;
+	import suites.GalleryTestSuit;
 
 	import org.flexunit.internals.TraceListener;
 	import org.flexunit.runner.FlexUnitCore;
 
 	import flash.display.MovieClip;
+
+
 
 	/**
 	 * @author aberestovskyi
@@ -14,15 +16,10 @@ package
 	{
 		public function FlexUnitRunner() 
 		{
-			onCreationComplete();
-        }
-        
-        private function onCreationComplete():void
-        {
-            var core:FlexUnitCore = new FlexUnitCore();
+			var core:FlexUnitCore = new FlexUnitCore();
             core.addListener(new TraceListener());
             core.visualDisplayRoot = stage;
-            core.run(TestArraysTask);
+            core.run(GalleryTestSuit);
         }
 	}
 }

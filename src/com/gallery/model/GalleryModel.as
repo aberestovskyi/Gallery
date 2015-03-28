@@ -30,6 +30,7 @@ package com.gallery.model
 			{
 				_images.splice(ind, 1);
 				bitmap.bitmapData.dispose();
+				bitmap = null;
 			}
 		}
 		
